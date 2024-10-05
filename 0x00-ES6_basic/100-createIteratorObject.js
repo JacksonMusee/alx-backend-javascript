@@ -1,6 +1,6 @@
 export default function createIteratorObject(report) {
 let employeeArray = []
-for (const empList of report) {
+for (const empList of Object.values(report)) {
   employeeArray.push(...empList);
 };
 
