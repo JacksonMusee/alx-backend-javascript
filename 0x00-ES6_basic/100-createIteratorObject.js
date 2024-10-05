@@ -5,12 +5,12 @@ for (const empList of report) {
 };
 
 const reportObjIterable = {
-  const allEmp = employeeArray,
+  allEmp: employeeArray,
   [Symbol.iterator]() {
-    let index;
+    let index = 0;
     const data = this.allEmp;
     return {
-      next: => {
+      next: () => {
         if (index < data.length) {
 	  return {value: data[index++], done: false};
 	}else {
