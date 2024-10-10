@@ -4,8 +4,8 @@ export default async function handleProfileSignup() {
   const photoInfo = uploadPhoto();
   const userInfo = createUser();
 
-  Promise.all([photoInfo, userInfo]).then((values) => {
+  await Promise.all([photoInfo, userInfo]).then((values) => {
     console.log(values[0].body, values[1].firstName, values[1].lastName);
-    return
+    return {};
   }).catch(() => new Error('Signup system offline'));
 }
