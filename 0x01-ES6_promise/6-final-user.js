@@ -4,8 +4,10 @@ import uploadPhoto from './5-photo-reject';
 export default async function handleProfileSignup(firstName, lastName, fileName) {
   const result = await Promise.allSettled([signUpUser(firstName, lastName), uploadPhoto(fileName)]);
 
-  return result.map((result) => ({
+  const newResult = result.map((result) => ({
     status: result.status,
-    value: result.status === 'fulfilled' ? result.value : result.reason.message.split('\n')[0],
+    value: result.status === 'fulfilled' ? result.value : `Error: ${result.reason.message.split('\n')[0]}`,
   }));
+
+  return newResult;
 }
