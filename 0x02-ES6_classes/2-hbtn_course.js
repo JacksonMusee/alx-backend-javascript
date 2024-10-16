@@ -30,7 +30,7 @@ export default class HolbertonCourse {
   }
 
   set length(newLen) {
-    if (typeof newLen !== 'string') {
+    if (typeof newLen !== 'number') {
       throw new Error('Name must be a number');
     } else {
       this._length = newLen;
@@ -39,7 +39,7 @@ export default class HolbertonCourse {
 
   set students(newStudents) {
     if (!(Array.isArray(newStudents) && newStudents.every((student) => typeof student === 'string'))) {
-      throw new Error('Name must be a string');
+      throw new Error('Students must be an array of strings');
     } else {
       this._students = newStudents;
     }
