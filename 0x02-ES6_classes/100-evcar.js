@@ -15,7 +15,6 @@ export default class EVCar extends Car {
   }
 
   cloneCar() {
-    this[Symbol.species] = super[Symbol.species]
-    return new EVCar()
+    return new Car[Symbol.species]();
   }
 }
