@@ -40,9 +40,14 @@ const countStudents = async (filePath) => {
 
     // Prepare the response string
     let result = `Number of students: ${totalStudents}\n`;
-    Object.keys(students).forEach(field => {
-      result += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
+
+    // Get all the fields in the students object and format the response
+    const fieldEntries = Object.entries(students).map(([field, names]) => {
+      return `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`;
     });
+
+    // Join all the field entries with a newline, but no extra newline after the last entry
+    result += fieldEntries.join('\n');
 
     return result;  // Return the formatted student data string
   } catch (error) {
@@ -77,11 +82,11 @@ const app = http.createServer((req, res) => {
         });
     } else {
       res.statusCode = 400;
-      res.end('Database file path missing');
+      res.end('Database file path missing\n');
     }
   } else {
     res.statusCode = 404;
-    res.end('Not Found');
+    res.end('Not Found\n');
   }
 });
 
