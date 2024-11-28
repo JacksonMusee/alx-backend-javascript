@@ -52,11 +52,11 @@ const app = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/plain');
 
   if (urlPath === '/') {
-    res.end('Hello Holberton School!\n');
+    res.end('Hello Holberton School!');
   } else if (urlPath === '/students' && method === 'GET') {
     const filePath = process.argv[2];
     if (filePath) {
-      res.write('This is the list of our students\n');
+      res.write('This is the list of our students');
       countStudents(filePath)
         .then(() => res.end())
         .catch((err) => {
@@ -65,11 +65,11 @@ const app = http.createServer((req, res) => {
         });
     } else {
       res.statusCode = 400;
-      res.end('Database file path missing\n');
+      res.end('Database file path missing');
     }
   } else {
     res.statusCode = 404;
-    res.end('Not Found\n');
+    res.end('Not Found');
   }
 });
 
