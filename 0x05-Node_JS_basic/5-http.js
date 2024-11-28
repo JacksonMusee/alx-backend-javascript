@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
-const path = require('path');
 
+// Function to read the CSV file asynchronously and parse it
 const readCSV = (filePath) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -13,19 +13,22 @@ const readCSV = (filePath) => {
   });
 };
 
+// Function to count the students and organize them by field
 const countStudents = async (filePath) => {
   try {
     const data = await readCSV(filePath);
 
+    // Split the CSV content by lines
     const lines = data.split('\n');
     const students = {};
     let totalStudents = 0;
 
+    // Loop through each line and process it
     lines.forEach(line => {
-      if (line.trim()) {
+      if (line.trim()) {  // Ignore empty lines
         const [firstname, lastname, age, field] = line.split(',');
 
-        if (field && firstname) {
+        if (field && firstname) {  // Only valid entries
           totalStudents++;
           if (!students[field]) {
             students[field] = [];
@@ -35,30 +38,39 @@ const countStudents = async (filePath) => {
       }
     });
 
-    console.log(`Number of students: ${totalStudents}`);
+    // Prepare the response string
+    let result = `Number of students: ${totalStudents}\n`;
     Object.keys(students).forEach(field => {
-      console.log(`Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}`);
+      result += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
     });
+
+    return result;  // Return the formatted student data string
   } catch (error) {
-    console.error(error.message);
+    return `Error: ${error.message}`;  // Return error message if any
   }
 };
 
+// Create the HTTP server
 const app = http.createServer((req, res) => {
   const urlPath = req.url;
   const method = req.method;
 
+  // Set the response headers
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
 
   if (urlPath === '/') {
+    // For the root path '/', send "Hello Holberton School!"
     res.end('Hello Holberton School!');
   } else if (urlPath === '/students' && method === 'GET') {
-    const filePath = process.argv[2];
+    // For '/students', load the students' data
+    const filePath = process.argv[2];  // CSV file path passed as argument
     if (filePath) {
-      res.write('This is the list of our students');
+      res.write('This is the list of our students\n');
       countStudents(filePath)
-        .then(() => res.end())
+        .then((studentInfo) => {
+          res.end(studentInfo);  // Send the formatted student data in the response body
+        })
         .catch((err) => {
           res.statusCode = 500;
           res.end(err.message);
@@ -73,8 +85,10 @@ const app = http.createServer((req, res) => {
   }
 });
 
+// Make the server listen on port 1245
 app.listen(1245, () => {
   console.log('Server running at http://localhost:1245/');
 });
 
+// Export the app for external use
 module.exports = app;
