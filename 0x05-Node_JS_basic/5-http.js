@@ -71,7 +71,7 @@ const app = http.createServer((req, res) => {
     // For '/students', load the students' data
     const filePath = process.argv[2];  // CSV file path passed as argument
     if (filePath) {
-      res.write('This is the list of our students\n');
+      res.write('This is the list of our students');
       countStudents(filePath)
         .then((studentInfo) => {
           res.end(studentInfo);  // Send the formatted student data in the response body
@@ -82,7 +82,7 @@ const app = http.createServer((req, res) => {
         });
     } else {
       res.statusCode = 400;
-      res.end('Database file path missing\n');
+      res.end('Database file path missing');
     }
   } else {
     res.statusCode = 404;
