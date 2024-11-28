@@ -81,12 +81,12 @@ const app = http.createServer((req, res) => {
           res.end(err.message);
         });
     } else {
-      res.statusCode = 400;
-      res.end('Database file path missing');
+      res.statusCode = 500;
+      res.end('Cannot load the database');
     }
   } else {
-    res.statusCode = 404;
-    res.end('Not Found\n');
+    res.statusCode = 500;
+    res.end('Cannot load the database');
   }
 });
 
