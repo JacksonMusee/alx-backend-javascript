@@ -13,40 +13,36 @@ const readCSV = (filePath) => new Promise((resolve, reject) => {
 
 // Function to process the CSV and count students
 const countStudents = async (filePath) => {
-  try {
-    const data = await readCSV(filePath);
+  const data = await readCSV(filePath);
 
-    const lines = data.split('\n');
-    const students = {};
-    let totalStudents = 0;
+  const lines = data.split('\n');
+  const students = {};
+  let totalStudents = 0;
 
-    // Process each line in the CSV
-    lines.forEach((line) => {
-      if (line.trim()) {
-        const [firstname, , , field] = line.split(',');
+  // Process each line in the CSV
+  lines.forEach((line) => {
+    if (line.trim()) {
+      const [firstname, , , field] = line.split(',');
 
-        if (field && firstname) {
-          totalStudents += 1;
-          if (!students[field]) {
-            students[field] = [];
-          }
-          students[field].push(firstname);
+      if (field && firstname) {
+        totalStudents += 1;
+        if (!students[field]) {
+          students[field] = [];
         }
+        students[field].push(firstname);
       }
-    });
+    }
+  });
 
-    // Create the result with the total number of students and the breakdown per field
-    let result = `Number of students: ${totalStudents}\n`;
+  // Create the result with the total number of students and the breakdown per field
+  let result = `Number of students: ${totalStudents}\n`;
 
-    // Format the students per field
-    const fieldEntries = Object.entries(students).map(([field, names]) => `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
+  // Format the students per field
+  const fieldEntries = Object.entries(students).map(([field, names]) => `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
 
-    result += fieldEntries.join('\n');
+  result += fieldEntries.join('\n');
 
-    return result;  // Return the formatted string
-  } catch (error) {
-    throw error;  // Throw the error to be caught in the server
-  }
+  return result; // Return the formatted string
 };
 
 // Create an HTTP server
@@ -67,20 +63,20 @@ const app = http.createServer((req, res) => {
     if (filePath) {
       countStudents(filePath)
         .then((studentInfo) => {
-          res.write('This is the list of our students\n');  // Only write this line if students info is available
-          res.end(studentInfo);  // End with the formatted student data
+          res.write('This is the list of our students\n'); // Only write this line if students info is available
+          res.end(studentInfo); // End with the formatted student data
         })
         .catch((err) => {
           res.statusCode = 500;
-          res.end(err.message);  // Send error message only, no 'This is the list of our students' line
+          res.end(err.message);
         });
     } else {
       res.statusCode = 500;
-      res.end('Cannot load the database');  // Send the error if filePath is not provided
+      res.end('Cannot load the database'); // Send the error if filePath is not provided
     }
   } else {
-    res.statusCode = 404;  // Not found for unsupported routes
-    res.end('Cannot load the database');  // Respond with a proper error message for unsupported routes
+    res.statusCode = 404; // Not found for unsupported routes
+    res.end('Cannot load the database'); // Respond with a proper error message for unsupported routes
   }
 });
 
