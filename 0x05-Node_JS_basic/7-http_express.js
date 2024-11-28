@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require('fs');
 
-// Function to read the CSV file asynchronously
 const readCSV = (filePath) => new Promise((resolve, reject) => {
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
@@ -11,7 +10,6 @@ const readCSV = (filePath) => new Promise((resolve, reject) => {
   });
 });
 
-// Function to count students and format them for the /students endpoint
 const countStudents = async (filePath) => {
   try {
     const data = await readCSV(filePath);
@@ -20,7 +18,6 @@ const countStudents = async (filePath) => {
     const students = {};
     let totalStudents = 0;
 
-    // Process each line and group students by their field
     lines.forEach((line) => {
       if (line.trim()) {
         const [firstname, , , field] = line.split(',');
@@ -35,7 +32,6 @@ const countStudents = async (filePath) => {
       }
     });
 
-    // Create the response text for the number of students and their fields
     let result = `Number of students: ${totalStudents}\n`;
 
     const fieldEntries = Object.entries(students).map(([field, names]) => 
@@ -49,17 +45,14 @@ const countStudents = async (filePath) => {
   }
 };
 
-// Initialize Express app
 const app = express();
 
-// Route for the root endpoint (/)
 app.get('/', (req, res) => {
   res.status(200).send('Hello Holberton School!');
 });
 
-// Route for the /students endpoint
 app.get('/students', (req, res) => {
-  const filePath = process.argv[2]; // Get the database file path from the command line arguments
+  const filePath = process.argv[2];
   if (filePath) {
     countStudents(filePath)
       .then((studentInfo) => {
@@ -73,7 +66,6 @@ app.get('/students', (req, res) => {
   }
 });
 
-// Start the server and listen on port 1245
 app.listen(1245, () => {
   console.log('Server running at http://localhost:1245/');
 });
