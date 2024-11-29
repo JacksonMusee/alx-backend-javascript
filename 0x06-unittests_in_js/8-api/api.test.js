@@ -20,17 +20,17 @@ describe('Index page', () => {
   });
 
   // Test 1: Correct status code
-  it.skip('should return status code 200', (done) => {
+  it('should return status code 200', (done) => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
-        expect(res.status).to.equal(200);
+        expect(res).to.have.status(200);
         done();
       });
   });
 
   // Test 2: Correct result (response body)
-  it.skip('should return the correct result', (done) => {
+  it('should return the correct result', (done) => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
