@@ -19,7 +19,7 @@ describe('calculateNumber', function () {
   describe('DIVIDE', function () {
     it('should return the result of dividing a by b after rounding', function () {
       assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
-      assert.strictEqual(calculateNumber('DIVIDE', 1.5, 3.7), 0.4);
+      assert.strictEqual(calculateNumber('DIVIDE', 1.5, 3.7), 0.5);
     });
 
     it('should return "Error" if division by 0', function () {
