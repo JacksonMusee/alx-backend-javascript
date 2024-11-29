@@ -2,7 +2,7 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { expect } = chai;
+const expect = chai.expect
 
 chai.use(chaiHttp);  // Use the chai-http plugin to make HTTP requests in the tests
 
