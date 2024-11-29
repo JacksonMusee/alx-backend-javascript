@@ -53,6 +53,7 @@ describe('Available payments', function () {
   it('should return status code 200', function (done) {
     request.get('http://localhost:7865/available_payments', function (err, res, body) {
       expect(res.statusCode).to.equal(200);
+      done()
     });
   });
 
