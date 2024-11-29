@@ -1,9 +1,8 @@
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const expect = chai.expect
+const expect = chai.expect;
 
-chai.use(chaiHttp);  // Use the chai-http plugin to make HTTP requests in the tests
+chai.use(chaiHttp);  // Using the chai-http plugin to make HTTP requests in tests
 
 describe('Index page', () => {
   let server;
@@ -40,7 +39,7 @@ describe('Index page', () => {
       });
   });
 
-  // Test 3: Other checks
+  // Test 3: Other checks (content-type)
   it('should respond with text content type', (done) => {
     chai.request(server)
       .get('/')
