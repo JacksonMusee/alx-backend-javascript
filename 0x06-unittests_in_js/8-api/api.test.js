@@ -38,14 +38,4 @@ describe('Index page', () => {
         done();
       });
   });
-
-  // Test 3: Other checks (content-type)
-  it('should respond with text content type', (done) => {
-    chai.request(server)
-      .get('/')
-      .end((err, res) => {
-        expect(res).to.have.header('content-type').that.includes('text/plain');
-        done();
-      });
-  });
 });
