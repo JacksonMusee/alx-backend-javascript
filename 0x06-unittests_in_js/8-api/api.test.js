@@ -1,4 +1,3 @@
-// api.test.js
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
