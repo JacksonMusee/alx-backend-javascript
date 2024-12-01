@@ -52,10 +52,11 @@ const app = http.createServer((req, res) => {
   } else if (urlPath === '/students' && method === 'GET') {
     const filePath = process.argv[2];
 
+    res.write('This is the list of our students\n');
+
     if (filePath) {
       countStudents(filePath)
         .then((studentInfo) => {
-          res.write('This is the list of our students\n');
           res.end(studentInfo);
         })
         .catch((err) => {
