@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// code
 const readline = require('readline');
 
 const rl = readline.createInterface({
