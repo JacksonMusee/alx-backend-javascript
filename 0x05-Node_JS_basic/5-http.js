@@ -17,7 +17,7 @@ const countStudents = async (filePath) => {
   const students = {};
   let totalStudents = 0;
 
-  lines.forEach((line) => {
+  lines.slice(1).forEach((line) => {
     if (line.trim()) {
       const [firstname, , , field] = line.split(',');
 
