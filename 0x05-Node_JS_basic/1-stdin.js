@@ -18,16 +18,25 @@ rl.question('', (name) => {
 });
 */
 
+
 process.stdout.write('Welcome to Holberton School, what is your name?\n');
 
+// Listen for readable input
 process.stdin.on('readable', () => {
   const name = process.stdin.read();
 
-  if (name.length > 0) {
-    process.stdout.write(`Your name is: ${name}`);
+  // If there's data, convert the buffer to a string and display the name
+  if (name !== null) {
+    process.stdout.write(`Your name is: ${name.toString()}`);
   }
 });
 
+// Listen for the end of the input stream (EOF or Ctrl+D)
 process.stdin.on('end', () => {
   process.stdout.write('This important software is now closing\n');
+});
+
+// Handle the 'error' event to gracefully manage unexpected issues
+process.stdin.on('error', (err) => {
+  process.stderr.write(`An error occurred: ${err.message}\n`);
 });
