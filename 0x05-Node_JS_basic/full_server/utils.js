@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export const readDatabase = (filePath) => new Promise((resolve, reject) => {
+const readDatabase = (filePath) => new Promise((resolve, reject) => {
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       reject(new Error('Cannot load the database'));
@@ -24,3 +24,5 @@ export const readDatabase = (filePath) => new Promise((resolve, reject) => {
     resolve(students);
   });
 });
+
+export default readDatabase;
