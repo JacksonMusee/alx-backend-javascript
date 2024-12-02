@@ -18,7 +18,7 @@ const countStudents = async (filePath) => {
     const students = {};
     let totalStudents = 0;
 
-    lines.forEach((line) => {
+    lines.slice(1).forEach((line) => {
       if (line.trim()) {
         const [firstname, , , field] = line.split(',');
 
@@ -41,7 +41,7 @@ const countStudents = async (filePath) => {
 
     return result;
   } catch (error) {
-    return `Error: ${error.message}`;
+    return `${error.message}`;
   }
 };
 
