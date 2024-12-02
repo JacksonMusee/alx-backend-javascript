@@ -1,29 +1,26 @@
 import { readDatabase } from '../utils';
 
-export class StudentsController {
+export default class StudentsController {
   static async getAllStudents(req, res) {
-    const filePath = process.argv[2]; // Retrieve the database filename from the command-line arguments
+    const filePath = process.argv[2];
 
     try {
       const students = await readDatabase(filePath);
       delete students.field;
-      
+
       let response = 'This is the list of our students\n';
-      const sortedFields = Object.keys(students).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-      
+      const sortedFields = Object.keys(students)
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
       // Collect the responses for each field in an array
-      const fieldResponses = sortedFields.map((field) => {
-        return `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}`;
-      });
-      
+      const fieldResponses = sortedFields.map((field) => `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}`);
+
       // Join all the field responses with a newline
       response += fieldResponses.join('\n');
       res.status(200).send(response);
     } catch (error) {
       res.status(500).send(error.message);
     }
-
-    return
   }
 
   static async getAllStudentsByMajor(req, res) {
@@ -46,5 +43,6 @@ export class StudentsController {
     } catch (error) {
       res.status(500).send(error.message);
     }
+    return null;
   }
 }
