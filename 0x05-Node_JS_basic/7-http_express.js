@@ -34,8 +34,7 @@ const countStudents = async (filePath) => {
 
     let result = `Number of students: ${totalStudents}\n`;
 
-    const fieldEntries = Object.entries(students).map(([field, names]) => 
-      `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
+    const fieldEntries = Object.entries(students).map(([field, names]) => `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
 
     result += fieldEntries.join('\n');
 
@@ -56,7 +55,7 @@ app.get('/students', (req, res) => {
   if (filePath) {
     countStudents(filePath)
       .then((studentInfo) => {
-        res.status(200).send('This is the list of our students\n' + studentInfo);
+        res.status(200).send(`This is the list of our students\n${studentInfo}`);
       })
       .catch((err) => {
         res.status(500).send(err.message);
