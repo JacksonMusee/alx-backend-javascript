@@ -41,12 +41,6 @@ export default class StudentsController {
 
       res.status(200).send(`List: ${majorStudents.join(', ')}`);
     } catch (error) {
-
-      if (error.code === 'ENOENT') {
-        // File not found
-        return res.status(500).send('Cannot load the database');
-      }
-      
       res.status(500).send(error.message);
     }
     return null;
