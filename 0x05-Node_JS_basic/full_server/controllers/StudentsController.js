@@ -1,4 +1,4 @@
-import { readDatabase } from '../utils.js';
+import { readDatabase } from '../utils';
 
 export class StudentsController {
   static async getAllStudents(req, res) {
@@ -6,18 +6,24 @@ export class StudentsController {
 
     try {
       const students = await readDatabase(filePath);
-
+      delete students.field;
+      
       let response = 'This is the list of our students\n';
       const sortedFields = Object.keys(students).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-
-      sortedFields.forEach((field) => {
-        response += `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}\n`;
+      
+      // Collect the responses for each field in an array
+      const fieldResponses = sortedFields.map((field) => {
+        return `Number of students in ${field}: ${students[field].length}. List: ${students[field].join(', ')}`;
       });
-
+      
+      // Join all the field responses with a newline
+      response += fieldResponses.join('\n');
       res.status(200).send(response);
     } catch (error) {
       res.status(500).send(error.message);
     }
+
+    return
   }
 
   static async getAllStudentsByMajor(req, res) {
